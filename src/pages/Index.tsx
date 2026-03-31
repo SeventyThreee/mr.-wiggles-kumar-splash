@@ -40,13 +40,53 @@ const Index = () => {
         </header>
 
         {/* Hero - Poster */}
-        <section className="flex justify-center px-4 pb-8">
+        <section className="flex justify-center px-4 pb-14">
           <motion.div
             className="relative"
             initial={{ opacity: 0, y: 40, rotate: -2 }}
             animate={{ opacity: 1, y: 0, rotate: -1.5 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
+            {/* Rotating comic star burst */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <svg
+                className="absolute w-[340px] h-[340px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] animate-spin-ring"
+                viewBox="0 0 200 200"
+                style={{ animationDuration: "20s" }}
+              >
+                <polygon
+                  points={Array.from({ length: 16 }, (_, i) => {
+                    const angle = (i * Math.PI * 2) / 16 - Math.PI / 2;
+                    const r = i % 2 === 0 ? 98 : 78;
+                    return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
+                  }).join(" ")}
+                  fill="none"
+                  stroke="hsl(45 100% 55%)"
+                  strokeWidth="2"
+                  strokeDasharray="8 4"
+                  opacity="0.6"
+                />
+              </svg>
+              <svg
+                className="absolute w-[380px] h-[380px] md:w-[500px] md:h-[500px] lg:w-[580px] lg:h-[580px] animate-spin-ring"
+                viewBox="0 0 200 200"
+                style={{ animationDuration: "30s", animationDirection: "reverse" }}
+              >
+                <polygon
+                  points={Array.from({ length: 12 }, (_, i) => {
+                    const angle = (i * Math.PI * 2) / 12 - Math.PI / 2;
+                    const r = i % 2 === 0 ? 98 : 82;
+                    return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
+                  }).join(" ")}
+                  fill="none"
+                  stroke="hsl(3 82% 58%)"
+                  strokeWidth="1.5"
+                  strokeDasharray="6 6"
+                  opacity="0.4"
+                />
+              </svg>
+            </div>
+
             {/* Splash corners */}
             <div className="absolute -top-3 -left-3 w-16 h-16 rounded-full bg-comic-cyan/20 blur-xl" />
             <div className="absolute -bottom-3 -right-3 w-20 h-20 rounded-full bg-comic-cyan/15 blur-xl" />
@@ -58,23 +98,14 @@ const Index = () => {
               width={440}
               height={620}
             />
-          </motion.div>
-        </section>
 
-        {/* CTA */}
-        <section className="flex flex-col items-center gap-4 pb-12 px-4">
-          <motion.p
-            className="font-comic text-secondary text-xl md:text-2xl tracking-wider"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            style={{ textShadow: "2px 2px 0 hsl(0 0% 0%)" }}
-          >
-            READ NOW!
-          </motion.p>
-          <RippleButton onClick={handleDownload}>
-            ⬇ Download Comic
-          </RippleButton>
+            {/* Download button overlaid at bottom of poster */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 z-20">
+              <RippleButton onClick={handleDownload}>
+                ⬇ Download Comic
+              </RippleButton>
+            </div>
+          </motion.div>
         </section>
 
         {/* Preview Strip */}
